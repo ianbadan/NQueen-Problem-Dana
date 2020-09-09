@@ -1,0 +1,381 @@
+uses time.DateTime
+
+data Ind {
+  int gene[]
+  dec fitness
+}
+
+component provides App requires io.Output out,io.Input in, util.RandomInt rand,data.adt.List list, data.IntUtil iu,
+                                data.DecUtil du, time.Calendar time {
+  int Nqueen = 0
+  int generation = 0
+  int popMax = 0
+
+  Ind[] sort(Ind lista[], bool ascending){
+		Ind result[] = lista
+
+		if (result.arrayLength > 1){
+			bool swap = true
+			while (swap){
+				swap = false
+				for (int i = 0; i < result.arrayLength - 1; i++){
+					bool doSwap = false
+					if (ascending)
+						doSwap = result[i+1].fitness < result[i].fitness
+						else
+						doSwap = result[i+1].fitness > result[i].fitness
+
+					if (doSwap){
+						Data tmp = result[i]
+
+						result[i] = result[i+1]
+						result[i+1] = tmp
+
+						swap = true
+						}
+					}
+				}
+			}
+
+		return result
+	}
+
+  void randomizer(){
+    DateTime dt = time.getTime()
+    rand.setSeed(dt.millisecond)
+  }
+
+  int numAttacks(int gene[]){
+    int cont = 0
+    for(int i = 0; i < Nqueen ; i++){
+      for(int j = 0; j < Nqueen; j++){
+        //nao olhar posicao da coluna
+        if(j != i){
+          //diagonal up-down
+          if((gene[i] - i == gene[j] - j)) cont++
+          //diagonal down-up
+          if((gene[i] + i == gene[j] + j)) cont++
+        }
+      }
+    }
+    return cont
+  }
+
+  void permutation(int gene[]){
+    int aux[] = new int[Nqueen]
+    //aux vector to create permutations
+    for(int i = 0; i < Nqueen ; i++){
+      aux[i] = 0
+    }
+
+    randomizer()
+    int cont = 0
+    //creating permutations
+    while(cont < Nqueen){
+      int random = rand.get(Nqueen)
+      if(aux[random] == 0){
+        gene[cont] = random
+        aux[random] = 1
+        cont++
+      }
+    }
+  }
+
+
+  Ind[] parentSelection(Ind population[]){
+    int quantity
+    if(popMax <= 20){
+      quantity = 6
+    } else{
+      dec pop = popMax
+      quantity = pop*0.30
+    }
+    if(quantity % 2 == 1) quantity++
+
+    Ind parents[] = new Ind[quantity]
+
+    int aux[] = new int[popMax]
+
+    //always select the best ind of the generation
+    parents[0] = population[0]
+    int cont = 1
+    aux[0] = 1
+    //aux vector to control selected parents
+    for(int i = 1; i < popMax ; i++){
+      aux[i] = 0
+    }
+
+    while(cont < quantity){
+      int random = rand.get(popMax)
+      if(aux[random] == 0){
+        parents[cont] = population[random]
+        aux[random] = 1
+        cont++
+      }
+    }
+    return parents
+  }
+
+  Ind[] createPopulation(Ind population[]){
+    bool hasEqual = false
+    int popLength = 0
+    Ind aux = new Ind()
+    int cont
+    while(popLength < popMax){
+        Ind ind = new Ind()
+        ind.gene = new int[Nqueen]
+      // create table gene
+      while(1){
+        permutation(ind.gene)
+        //verify if there is another ind with same gene
+        for(int i = 0; i < popLength; i++){
+          cont = 0
+          aux = population[i]
+          for(int j = 0; j < Nqueen; j++){
+            if(ind.gene[j] == aux.gene[j]){
+              cont++
+            }
+          }
+          if(cont == Nqueen){
+            hasEqual = true
+            break
+          }
+        }
+
+        if(hasEqual){
+          hasEqual = false
+        } else {
+          population[popLength] = ind
+          fitnessFunction(ind)
+          popLength++
+          break
+        }
+      }
+    }
+  return population
+  }
+
+  void fitnessFunction(Ind ind){
+    int attacks = numAttacks(ind.gene)
+    if(attacks > 0){
+      ind.fitness = 1.0/attacks
+    } else {
+      ind.fitness = 1.0
+    }
+  }
+
+
+  Ind[] crossoverParents(Ind parents[]){
+    int length = parents.arrayLength
+    Ind children[] = new Ind[length]
+    int i
+    int j
+    int k
+
+    int aux1[] = new int[Nqueen]
+    int aux2[] = new int[Nqueen]
+
+    // starting cross over
+    for(i = 0; i < length; i+=2){
+
+      for(j = 0; j< Nqueen ; j++){
+        aux1[j] = 0
+        aux2[j] = 0
+      }
+      children[i] = new Ind()
+      children[i].gene = new int[Nqueen]
+
+      children[i+1] = new Ind()
+      children[i+1].gene = new int[Nqueen]
+      j=0
+      for(k = 0; k < Nqueen/2; k++){
+        //first child receives first-half of first parents gene
+        children[i].gene[j] = parents[i].gene[k]
+        aux1[parents[i].gene[k]] = 1
+
+        //second child receives first-half of second parents gene
+        children[i+1].gene[j] = parents[i+1].gene[k]
+        aux2[parents[i+1].gene[k]] = 1
+        j++
+      }
+
+      int cont1 = Nqueen/2
+      int cont2 = Nqueen/2
+
+      for(j = 0; j < Nqueen; j++){
+        //first child receives the remaining genes of second parent
+        if(aux1[parents[i+1].gene[j]] == 0){
+          aux1[parents[i+1].gene[j]] = 1
+          children[i].gene[cont1] = parents[i+1].gene[j]
+          cont1++
+        }
+        //second child receives the remaining genes of second parent
+        if(aux2[parents[i].gene[j]] == 0){
+          aux2[parents[i].gene[j]] = 1
+          children[i+1].gene[cont2] = parents[i].gene[j]
+          cont2++
+        }
+      }
+      //looking for mutations
+      probMutation(children[i])
+      probMutation(children[i+1])
+
+      fitnessFunction(children[i])
+      fitnessFunction(children[i+1])
+
+    }
+    return children
+  }
+
+
+  void mutation(Ind ind){
+    int ale1 = rand.get(Nqueen)
+    int ale2 = rand.get(Nqueen)
+
+    while(ale1 == ale2) ale2 = rand.get(Nqueen)
+
+    int aux = ind.gene[ale1]
+    ind.gene[ale1] = ind.gene[ale2]
+    ind.gene[ale2] = aux
+  }
+
+  bool probMutation(Ind ind){
+    randomizer()
+    int random = rand.get(100)
+    if(random < 60){
+      mutation(ind)
+      random = rand.get(100)
+      if(random < 30){
+        mutation(ind)
+      }
+      return true
+    }
+    return false
+  }
+
+
+
+  int App:main(AppParam params[]){
+    Ind ind
+    Ind population[]
+    Ind parents[]
+    Ind children[]
+    int j = 0
+    int i = 0
+    bool hasFound = false
+    int maxGeneration = 0
+
+    out.println("Num of queens: ")
+    Nqueen = iu.intFromString(in.readln())
+
+    out.println("Population max length: ")
+    popMax = iu.intFromString(in.readln())
+
+
+    out.println("Insert the max of generations: ")
+    maxGeneration = iu.intFromString(in.readln())
+
+    population = new Ind[popMax]
+
+    population = createPopulation(population)
+    /*
+    out.println("____________________________________________________________________________________")
+    population = sort(population, false)
+    out.println("After Sorting")
+    for(i = 0; i < popMax; i++){
+      for(j = 0; j < Nqueen; j++){
+        out.print("$(iu.intToString(population[i].gene[j])),")
+      }
+      out.println("fitness: $(du.decToString(population[i].fitness))")
+    }
+    parents = parentSelection(population)
+    out.println("\n\nSelected Parents")
+    for(i = 0; i < parents.arrayLength; i++){
+      for(j = 0; j < Nqueen; j++){
+        out.print("$(iu.intToString(parents[i].gene[j])),")
+      }
+      out.println("fitness: $(du.decToString(parents[i].fitness))")
+    }
+
+    children = crossoverParents(parents)
+    out.println("Generated Children")
+    for(i = 0; i < children.arrayLength; i++){
+      for(j = 0; j < Nqueen; j++){
+        out.print("$(iu.intToString(children[i].gene[j])),")
+      }
+      out.println("fitness: $(du.decToString(children[i].fitness))")
+    }
+    j = 0
+    for(i = (popMax - (children.arrayLength)); i < popMax ; i++){
+      population[i] = children[j]
+      j++
+    }
+    out.println("\n\nFinal population")
+    for(i = 0; i < popMax; i++){
+      for(j = 0; j < Nqueen; j++){
+        out.print("$(iu.intToString(population[i].gene[j])),")
+      }
+      out.println("fitness: $(du.decToString(population[i].fitness))")
+    }*/
+
+    dec oldFit = 0
+    while(1){
+      population = sort(population, false)
+
+      if(population[0].fitness == 1){
+        hasFound = true
+        break
+      }
+
+      if(oldFit < population[0].fitness){
+        out.println("____________________________________________________________________________________")
+        out.println("Generation = $generation")
+        out.println("Best solution at this generation")
+          for(j = 0; j < Nqueen; j++){
+            out.print("$(iu.intToString(population[0].gene[j])),")
+          }
+          out.println("fitness: $(du.decToString(population[0].fitness))")
+          oldFit = population[0].fitness
+      } else {
+        oldFit = population[0].fitness
+      }
+
+
+      if(generation >= maxGeneration) break
+
+      parents = parentSelection(population)
+      children = crossoverParents(parents)
+
+      j = 0
+      for(i = (popMax - (children.arrayLength)); i < popMax ; i++){
+        population[i] = children[j]
+        j++
+      }
+
+      generation++
+    }
+
+    if(hasFound == true){
+    out.println("\n\nSolution found after $generation generations")
+        for(j = 0; j < Nqueen; j++){
+          out.print("$(iu.intToString(population[0].gene[j])),")
+        }
+      out.println("fitness: $(du.decToString(population[0].fitness))")
+      for(i = 0; i < Nqueen; i++){
+        for(j = 0; j < Nqueen; j++){
+          if(population[0].gene[j] == i){
+            out.print("Q|")
+          } else{
+            out.print("_|")
+          }
+        }
+        out.print("\n")
+      }
+    }
+    else{
+      out.println("\n\nSolution not found after $generation generations")
+    }
+
+    return 0
+  }
+}

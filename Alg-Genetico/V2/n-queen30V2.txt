@@ -1,0 +1,21 @@
+N = 30 PopMax = 300 MaxGen = 5000
+
+Solution found after 850 generations
+3,11,15,5,26,23,4,13,16,29,19,25,1,9,18,27,2,28,17,14,21,6,22,0,7,12,8,24,20,10,fitness: 1.0
+Test 1 Tempo gasto 350243 ms
+
+Solution found after 695 generations
+10,14,5,19,21,29,13,1,9,20,6,3,11,27,18,23,25,7,2,12,26,16,8,28,24,22,0,15,17,4,fitness: 1.0
+Test 2 Tempo gasto 288183 ms
+
+Solution found after 1355 generations
+9,14,12,24,4,8,29,18,28,17,0,6,26,10,15,13,2,22,3,1,27,25,21,11,7,16,19,5,20,23,fitness: 1.0
+Test 3 Tempo gasto 544352 ms
+
+Solution found after 722 generations
+23,16,18,29,8,3,20,28,19,4,12,14,6,21,5,1,22,26,11,9,17,0,2,10,7,24,27,15,13,25,fitness: 1.0
+Test 4 Tempo gasto 299941 ms
+
+Solution found after 2022 generations
+27,6,12,9,18,16,24,11,2,26,29,23,4,10,22,14,3,7,25,19,21,5,15,8,1,20,28,13,0,17,fitness: 1.0
+Test 5 Tempo gasto 812013 ms

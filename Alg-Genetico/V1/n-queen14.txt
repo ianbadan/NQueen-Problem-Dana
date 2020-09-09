@@ -1,0 +1,62 @@
+N = 14 PopMax = 84 MaxGen = 5000
+
+Solution found after 228 generations
+11,7,3,0,2,10,13,6,8,12,4,1,5,9,fitness: 1.0
+Test 1 Tempo gasto 3866 ms
+
+Solution found after 57 generations
+10,7,11,1,3,0,6,9,13,2,4,12,8,5,fitness: 1.0
+Test 2 Tempo gasto 1112 ms
+
+Solution found after 371 generations
+12,10,3,6,4,2,13,11,7,5,0,9,1,8,fitness: 1.0
+Test 3 Tempo gasto 6294 ms
+
+Solution found after 1241 generations
+9,6,0,10,1,13,5,3,8,11,4,12,7,2,fitness: 1.0
+Test 4 Tempo gasto 20012 ms
+
+Solution found after 81 generations
+6,4,11,0,3,10,13,2,9,5,8,1,12,7,fitness: 1.0
+Test 5 Tempo gasto 1506 ms
+
+Solution found after 2366 generations
+8,13,5,3,0,7,11,2,12,1,9,4,6,10,fitness: 1.0
+Test 6 Tempo gasto 38258 ms
+
+Solution found after 925 generations
+7,4,8,12,2,13,11,6,1,5,10,0,9,3,fitness: 1.0
+Test 7 Tempo gasto 15183 ms
+Solution not found
+
+Solution found after 354 generations
+11,7,0,10,8,4,1,3,13,9,12,5,2,6,fitness: 1.0
+Test 8 Tempo gasto 5989 ms
+
+Solution found after 997 generations
+13,7,3,12,6,1,10,2,11,8,4,9,0,5,fitness: 1.0
+Test 9 Tempo gasto 16191 ms
+
+Solution found after 196 generations
+0,5,8,12,7,2,13,1,6,11,3,10,4,9,fitness: 1.0
+Test 10 Tempo gasto 3414 ms
+
+Solution found after 2148 generations
+6,9,7,2,0,3,13,11,8,12,4,1,5,10,fitness: 1.0
+Test 11 Tempo gasto 34634 ms
+
+Solution found after 1557 generations
+6,2,10,12,3,8,4,11,0,5,1,13,9,7,fitness: 1.0
+Test 12 Tempo gasto 25524 ms
+
+Solution found after 545 generations
+6,8,1,5,7,0,11,3,12,9,4,2,13,10,fitness: 1.0
+Test 13 Tempo gasto 8996 ms
+
+Solution found after 61 generations
+6,4,12,7,13,10,1,5,0,9,11,2,8,3,fitness: 1.0
+Test 14 Tempo gasto 1182 ms
+
+Solution found after 2134 generations
+1,5,7,13,0,12,9,4,6,3,10,2,11,8,fitness: 1.0
+Test 15 Tempo gasto 34058 ms

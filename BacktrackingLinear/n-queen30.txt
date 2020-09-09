@@ -1,0 +1,2 @@
+Test 1 Tempo gasto 5610522 ms
+Test 2 Tempo gasto 5586136 ms

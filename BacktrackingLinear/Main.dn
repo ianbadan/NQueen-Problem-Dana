@@ -1,0 +1,144 @@
+uses time.DateTime
+
+component provides App requires io.Output out, io.Input in, data.IntUtil iu, time.DateUtil du, time.Calendar time,
+                                io.File{
+  int board[]
+  int N
+
+  void printBoard(){
+    for(int i = 0; i < N; i++){
+      for(int j = 0; j < N; j++){
+        if(board[j] == i){
+          out.print("Q|")
+        } else{
+          out.print("_|")
+        }
+      }
+      out.print("\n")
+    }
+      for(int i=0; i<N; i++){
+        out.print("$(iu.intToString(board[i])),")
+      }
+      out.println("")
+  }
+
+
+  bool isSafe(int col, int value){
+    //check if there is another queen in same row
+    for(int i = 0; i < col ; i++){
+      if(value == board[i]){
+        //out.print("Queen in the same row\n")
+        return false
+      }
+    }
+    for(int i = 0; i < N ; i++){
+
+      //nao olhar posicao da coluna
+      if(col != i){
+        //diagonal up-down
+        if((board[i] - i == value - col)){
+          //out.println("Queen in the same up-to-down diagonal")
+          return false
+        }
+        //diagonal down-up
+        if((board[i] + i == value + col)){
+          //out.println("Queen in the same down-to-up diagonal")
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+  bool check(int col){
+    if(col >= N)
+      return true
+
+    for(int i = 0; i < N; i++){
+    //  out.println("\nCol = $col Value = $i")
+      if(isSafe(col, i)){
+          board[col] = i
+
+          if(check(col+1))
+            return true
+
+          //backtrack
+          board[col] = N*2
+      }
+    }
+    return false
+  }
+
+  bool solve(){
+    board = new int[N]
+    for(int cont = 0; cont < N; cont++){
+      board[cont] = N*2
+    }
+
+    if(check(0) == false){
+      out.println("No solution")
+      return false
+    }
+
+    printBoard()
+    return true
+  }
+
+  int App:main(AppParam params[]){
+    DateTime dtIni
+    DateTime dtFinal
+    DateTime dtGasto
+    int cont = 0
+    N = 8
+    int numTest
+    File f
+    while(1){
+      if(N > 40) break
+      if(N < 20){
+        numTest = 20
+      } else if(N < 28){
+        numTest = 10
+      } else if(N < 31){
+        numTest = 2
+      } else {
+        numTest = 1
+      }
+      f = new File("n-queen$N.txt", File.CREATE)
+      cont = 0
+      while(cont < numTest){
+        dtIni = time.getTime()
+        solve()
+        dtFinal = time.getTime()
+        dtGasto = du.diff(dtIni, dtFinal)
+        out.println("N = $N Test $(cont+1) Tempo gasto $(du.toMilliseconds(dtGasto))")
+        f.write("Test $(cont+1) Tempo gasto $(du.toMilliseconds(dtGasto)) ms\n")
+        cont++
+      }
+      if(N < 30){
+        N++
+      } else{
+        N = N + 5
+      }
+      f.close()
+    }
+    /*
+    out.print("Value of N: ")
+    N = iu.intFromString(in.readln())
+    out.print("Num of test: ")
+    int numTest = iu.intFromString(in.readln())
+    f = new File("n-queen$N.txt", File.CREATE)
+    cont = 0
+    while(cont < numTest){
+      dtIni = time.getTime()
+      solve()
+      dtFinal = time.getTime()
+      dtGasto = du.diff(dtIni, dtFinal)
+      out.println("Tamanho=(iu.intToString(N)) Test $(cont) Tempo gasto $(du.toMilliseconds(dtGasto))")
+      f.write("Test $(cont+1) Tempo gasto $(du.toMilliseconds(dtGasto)) ms\n")
+      cont++
+    }
+    f.close()
+    */
+    return 0
+  }
+}
