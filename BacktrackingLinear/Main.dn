@@ -93,14 +93,8 @@ component provides App requires io.Output out, io.Input in, data.IntUtil iu, tim
     int numTest
     File f
     while(1){
-      if(N > 40) break
+      if(N > 20) break
       if(N < 20){
-        numTest = 20
-      } else if(N < 28){
-        numTest = 10
-      } else if(N < 31){
-        numTest = 2
-      } else {
         numTest = 1
       }
       f = new File("n-queen$N.txt", File.CREATE)

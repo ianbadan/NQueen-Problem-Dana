@@ -428,7 +428,8 @@ bool probMutation(Ind ind){
     else{
       out.println("\n\nSolution not found after $generation generations")
     }
-
-    return 0
+    out.println("Print before ending")
+    return 1
+    
   }
 }

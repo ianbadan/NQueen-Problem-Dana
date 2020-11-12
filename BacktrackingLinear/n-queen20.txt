@@ -1,10 +1,1 @@
-Test 1 Tempo gasto 9977 ms
-Test 2 Tempo gasto 9975 ms
-Test 3 Tempo gasto 10041 ms
-Test 4 Tempo gasto 10004 ms
-Test 5 Tempo gasto 9989 ms
-Test 6 Tempo gasto 10031 ms
-Test 7 Tempo gasto 10031 ms
-Test 8 Tempo gasto 10000 ms
-Test 9 Tempo gasto 9971 ms
-Test 10 Tempo gasto 9935 ms
+Test 1 Tempo gasto 10222 ms

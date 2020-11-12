@@ -331,9 +331,7 @@ component provides App requires io.Output out,io.Input in, util.RandomInt rand,d
         out.println("____________________________________________________________________________________")
         out.println("Generation = $generation")
         out.println("Best solution at this generation")
-          for(j = 0; j < Nqueen; j++){
-            out.print("$(iu.intToString(population[0].gene[j])),")
-          }
+
           out.println("fitness: $(du.decToString(population[0].fitness))")
           oldFit = population[0].fitness
       } else {
