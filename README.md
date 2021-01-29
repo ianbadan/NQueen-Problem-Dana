@@ -18,12 +18,50 @@ Este é um problema clássico da computação e existem várias formas de resolv
 
 ## Solução utilizando Backtracking
 
-Um dos algoritmos consiste num método utilizando Backtracking Linear, é um excelente método para valores pequenos de N, mas quando o valor de N aumenta, vemos que é um algoritmo não muito efetivo, o tempo necessário para se obter o resultado cresce exponencialmente, pois o algoritmo testa toda as possibilidades de tabuleiro até encontrar o primeiro tabuleiro que resolva o problema.
+Um dos jeitos é com Backtracking Linear que é um método que vai testando todas as possibilidades de configuração até chegar na primeira configuração de tabuleiro que seja uma solução para o problema ou pode mostrar todas as configurações possíveis se projetado para isso. Esse algoritmo funciona de forma muito específica, irá posicionando as rainhas da esquerda para a direita no tabuleiro, sempre na primeira posição disponível para isso, então será assim, a primeira rainha será posicionada na primeira coluna e então irá para a segunda e posicionará ela na primeira posição que está livre e isso se repetirá até chegar a um tabuleiro que seja resposta ou chegar em uma coluna em que não é possível posicionar a rainha em nenhuma linha, quando isso acontecer o algoritmo irá voltar pra coluna anterior e mudará a posição da rainha até que a próxima tenha uma posição valida, caso isso não aconteça, voltará mais uma coluna e mudará a rainha dessa coluna de posição e vai verificar as rainhas a direita, esse método de avançar e retornar quando se chegar em um caminho sem saída é como o algoritmo funciona.
 
-### Solução com Algoritmo Genético (AG)
+É um excelente algoritmo para valores pequenos de N, mas quando o valor de N aumenta, vemos que é um algoritmo não muito efetivo, pois o tempo necessário para se obter o resultado cresce exponencialmente, porque as possibilidades de posições totais aumenta dessa forma, sempre seguindo a ideia de N!, se o algoritmo for pensado com a ideia de permutações e caso não pense assim, se torna N^n, o que piora de forma ainda mais drástica o seu custo computacional e tempo de computação.
 
-O segundo algoritmo consiste em duas implementações de algoritmos genéticos.
+O algoritmo implementado na pasta BacktrackingLinear funciona seguindo a ideia de permutações e para ao encontrar o primeiro resultado possível.
 
-### Versão 1 do AG
+## Solução com Algoritmo Genético (AG)
+A aplicação com algoritmo genético é um pouco mais complicado, mas soluciona o problema de custo computacional, principalmente de tempo de computação, pois esse algoritmo é capaz de dar saltos dentro do espaço de busca, assim não tendo a necessidade de olhar todas as possibilidades de combinação para esse problema.
 
-### Versão 2 do AG
+Isso é possível porque o algoritmo genético é pensando para quando se tem problemas de otimização e adaptação, pois como utiliza as ideias de evolução, seleção natural e genética, é possivel criar indivíduos iniciais e através deles ir melhorando a aptidão das população por meio da criação de novos indivíduos pela recombinação de material genético dos pais até chegar em um indivíduo que tenha uma aptidão alta a ponto de resolver o problema.
+
+Antes de explicar as partes de um algoritmo genético, alguns termos devem ser explicados, são eles:
+
+* **Indivíduo**: é uma possível solução para o problema, tem o seu próprio gene e caracteristicas únicas.
+
+* **População**: um conjunto de indivíduos, em algoritmos genéticos o tamanho da população é fixo, então para novos indivíduos entrarem na população, outros devem ser eliminados.
+
+* **Gene**: é a forma como o indivíduo é representado para o algoritmo, é o mesmo que **genótipo**, no caso das rainhas, é o vetor com os valores inteiros que indicam a posição de cada rainha.
+
+* **Fenótipo**: são as caracteristicas do genes quando são expressos, em resumo, é a forma como outros indivíduos enxergam aquele indivíduo, no problema das rainhas, é o tabuleiro com as rainhas posicionadas.
+
+* **Máxima Global**: também é chamado como **ótimo global**, é quando o algoritmo chega ao seu fim e consegue encontrar a melhor solução para o problema, em alguns casos, somente os indivíduos dentro de uma máximo local são aceitos como solução para o problema e tem casos em que mesmo que não se chegue a esse patamar, o individuo encontrado ainda é uma solução, só não será a melhor de todas.
+
+* **Máxima Local**: também conhecido como **ótimo local**, é quando se chega ao final do algoritmo e não encontrou o melhor resultado, isso geralmente acontece quando se ocorre uma perda na variação genética da população e assim, os indivíduos são muito parecidos e não se é possível mais recuperar os genes perdidos de indivíduos que já foram eliminados, ainda é possível que esse indíviduo seja usado como solução, mas a eficiência do algoritmo será menor que o comum, no caso das N-rainhas, se chegar a uma máximo local, ele não poderá ser utilizado como solução, pois ainda se terão rainhas se atacando.
+
+* **Convêrgencia Prematura**: acontece quando se perde variação genética na população e nem mesmo o processo de mutação consegue recuperar, assim o código converge para uma solução que não é ótima caindo uma máxima local.
+
+Após essa explicação dos termos, é necessário entender quais são as partes de um algoritmo genético:
+
+1. **Representação dos indivíduos**: é uma parte extremamente importante, pois a representação errada dos indivíduo pode trazer resultados indesejados ou dificuldade nas outras partes, em algoritmos genéticos se usa strings ou vetores com um conjunto de valores finitos para representar os indivíduo, no problema das rainhas tem varias formas de representar, mas a que eu escolhi foi usar um vetor com n-1 posições, onde cada posição representa do vetor representa uma coluna do tabuleiro e o conjunto de valores vai de 0 até n-1 e não podem se repetir, sendo uma permuta de 0 até n-1, esse valores representarão as linhas do tabuleiro em que cada rainha está, isso remove a possibilidade de se ter mais de uma rainha em cada linha e coluna, então a única preocupação será verificar se elas se atacam nas diagonais.
+
+2. **Criação da primeira população**:
+
+3. **Seleção dos pais**:
+
+4. **Processo de recombinação(crossing over)**:
+
+5. **Proceso de mutação**:
+
+6. **Seleção de sobreviventes**:
+
+7. **Critério de parada**:
+
+
+## Versão 1 do AG
+
+## Versão 2 do AG
