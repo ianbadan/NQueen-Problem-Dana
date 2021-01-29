@@ -1,4 +1,4 @@
-# Problema das N-Rainhas <h1>
+# Problema das N-Rainhas
 
 Este repositório contendo algoritmos que resolvem o problema das N-Rainhas, um algoritmo é uma implementação utilizando backtracking e o outro é uma implementação utilizando algoritmo genético para resolver o problems, ambos os algoritmos foram implementados utilizando a linguagem de programação DANA (http://www.projectdana.com).
 
@@ -18,11 +18,13 @@ Este é um problema clássico da computação e existem várias formas de resolv
 
 ## Solução utilizando Backtracking
 
-Um dos jeitos é com Backtracking Linear que é um método que vai testando todas as possibilidades de configuração até chegar na primeira configuração de tabuleiro que seja uma solução para o problema ou pode mostrar todas as configurações possíveis se projetado para isso. Esse algoritmo funciona de forma muito específica, irá posicionando as rainhas da esquerda para a direita no tabuleiro, sempre na primeira posição disponível para isso, então será assim, a primeira rainha será posicionada na primeira coluna e então irá para a segunda e posicionará ela na primeira posição que está livre e isso se repetirá até chegar a um tabuleiro que seja resposta ou chegar em uma coluna em que não é possível posicionar a rainha em nenhuma linha, quando isso acontecer o algoritmo irá voltar pra coluna anterior e mudará a posição da rainha até que a próxima tenha uma posição valida, caso isso não aconteça, voltará mais uma coluna e mudará a rainha dessa coluna de posição e vai verificar as rainhas a direita, esse método de avançar e retornar quando se chegar em um caminho sem saída é como o algoritmo funciona.
+Um dos jeitos é com Backtracking Linear que é um método que vai testando todas as possibilidades de configuração até chegar na primeira configuração de tabuleiro que seja uma solução para o problema ou pode mostrar todas as configurações possíveis se projetado para isso.
+
+Esse algoritmo funciona de forma muito específica, irá posicionando as rainhas da esquerda para a direita no tabuleiro, sempre na primeira posição disponível para isso, então será assim, a primeira rainha será posicionada na primeira coluna e então irá para a segunda e posicionará ela na primeira posição que está livre e isso se repetirá até chegar a um tabuleiro que seja resposta ou chegar em uma coluna em que não é possível posicionar a rainha em nenhuma linha, quando isso acontecer o algoritmo irá voltar pra coluna anterior e mudará a posição da rainha até que a próxima tenha uma posição valida, caso isso não aconteça, voltará mais uma coluna e mudará a rainha dessa coluna de posição e vai verificar as rainhas a direita, esse método de avançar e retornar quando se chegar em um caminho sem saída é como o algoritmo funciona.
 
 É um excelente algoritmo para valores pequenos de N, mas quando o valor de N aumenta, vemos que é um algoritmo não muito efetivo, pois o tempo necessário para se obter o resultado cresce exponencialmente, porque as possibilidades de posições totais aumenta dessa forma, sempre seguindo a ideia de N!, se o algoritmo for pensado com a ideia de permutações e caso não pense assim, se torna N^n, o que piora de forma ainda mais drástica o seu custo computacional e tempo de computação.
 
-O algoritmo implementado na pasta BacktrackingLinear funciona seguindo a ideia de permutações e para ao encontrar o primeiro resultado possível.
+O algoritmo implementado na pasta BacktrackingLinear funciona seguindo a ideia de permutações e para ao encontrar o primeiro resultado que é uma solução para o problema.
 
 ## Solução com Algoritmo Genético (AG)
 A aplicação com algoritmo genético é um pouco mais complicado, mas soluciona o problema de custo computacional, principalmente de tempo de computação, pois esse algoritmo é capaz de dar saltos dentro do espaço de busca, assim não tendo a necessidade de olhar todas as possibilidades de combinação para esse problema.
@@ -49,9 +51,9 @@ Após essa explicação dos termos, é necessário entender quais são as partes
 
 1. **Representação dos indivíduos**: é uma parte extremamente importante, pois a representação errada dos indivíduo pode trazer resultados indesejados ou dificuldade nas outras partes, em algoritmos genéticos se usa strings ou vetores com um conjunto de valores finitos para representar os indivíduo, no problema das rainhas tem varias formas de representar, mas a que eu escolhi foi usar um vetor com n-1 posições, onde cada posição representa do vetor representa uma coluna do tabuleiro e o conjunto de valores vai de 0 até n-1 e não podem se repetir, sendo uma permuta de 0 até n-1, esse valores representarão as linhas do tabuleiro em que cada rainha está, isso remove a possibilidade de se ter mais de uma rainha em cada linha e coluna, então a única preocupação será verificar se elas se atacam nas diagonais.
 
-2. **Criação da primeira população**:
+2. **Criação da primeira população**: a primeiro população de um algoritmo genético é criado de forma totalmente aleatória e vai depender de como é a representação do seu indivíduo, no problema das N-rainhas, a primeira população é criada por meio de um algoritmo que cria M vetores com permutações de 0 até N-1, sendo M o tamanho da população.
 
-3. **Seleção dos pais**:
+3. **Seleção dos pais**: 
 
 4. **Processo de recombinação(crossing over)**:
 
@@ -64,6 +66,4 @@ Após essa explicação dos termos, é necessário entender quais são as partes
 8. **Critério de parada**:
 
 
-## Versão 1 do AG
-
-## Versão 2 do AG
+## Diferença entre as versões do Algoritmo Genético
