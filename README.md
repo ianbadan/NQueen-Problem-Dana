@@ -1,4 +1,4 @@
-# Problema das N-Rainhas
+# Problema das N-Rainhas <h1>
 
 Este repositório contendo algoritmos que resolvem o problema das N-Rainhas, um algoritmo é uma implementação utilizando backtracking e o outro é uma implementação utilizando algoritmo genético para resolver o problems, ambos os algoritmos foram implementados utilizando a linguagem de programação DANA (http://www.projectdana.com).
 
@@ -55,11 +55,13 @@ Após essa explicação dos termos, é necessário entender quais são as partes
 
 4. **Processo de recombinação(crossing over)**:
 
-5. **Proceso de mutação**:
+5. **Processo de mutação**:
 
-6. **Seleção de sobreviventes**:
+6. **Função de aptidão**:
 
-7. **Critério de parada**:
+7. **Seleção de sobreviventes**:
+
+8. **Critério de parada**:
 
 
 ## Versão 1 do AG
